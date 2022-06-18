@@ -1,17 +1,39 @@
-<script setup>
-import { RouterLink, RouterView } from 'vue-router'
 
-</script>
 
 <template>
   <div>
     <RouterLink to="/">Home</RouterLink>
     <RouterLink to="/about">About</RouterLink>
+    <RouterLink to="/signup">Sign Up</RouterLink>
+    <RouterLink to="/login">Login</RouterLink>
+    <button v-if="user" @click="logout">Log Out</button>
     <RouterView/>
 
   </div>
 
 </template>
+<script >
+import { RouterLink, RouterView } from 'vue-router';
+import {computed} from "vue";
+import {useStore} from "vuex";
+
+ export default {
+  setup(){
+    const store = useStore()
+    
+    return{
+      store, user: computed(() => store.state.user),
+    }
+  },
+  methods:{ 
+    logout(){
+      this.store.dispatch("logout")
+    }
+  }
+}
+  
+
+</script>
 
 <style>
 @import '@/assets/base.css';

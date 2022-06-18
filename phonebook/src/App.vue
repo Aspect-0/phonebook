@@ -4,8 +4,8 @@
   <div>
     <RouterLink to="/">Home</RouterLink>
     <RouterLink to="/about">About</RouterLink>
-    <RouterLink to="/signup">Sign Up</RouterLink>
-    <RouterLink to="/login">Login</RouterLink>
+    <RouterLink v-if="!user" to="/signup">Sign Up</RouterLink>
+    <RouterLink v-if="!user" to="/login">Login</RouterLink>
     <button v-if="user" @click="logout">Log Out</button>
     <RouterView/>
 

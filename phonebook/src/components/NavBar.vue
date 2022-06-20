@@ -34,9 +34,16 @@ import {useStore} from "vuex";
 @import "@/assets/base.css";
 
 .nav{
+  position: sticky;
+  z-index: 2;
+  top:0px;
   display: flex;
   justify-content: right;
-  margin-bottom: 2rem;
+  height: 3rem;
+  vertical-align: middle;
+  align-items: center;
+  background-color: var(--background-color);
+
 }
 
 .link{
@@ -44,7 +51,8 @@ import {useStore} from "vuex";
   text-decoration: none;
   color: var(--text-color);
   margin-right: 2rem;
-  margin-top: 0.5rem;
+  height: 2rem;
+  padding: none;
   border: none;
   font-weight: 300;
   background-color: transparent;

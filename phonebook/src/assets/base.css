@@ -9,6 +9,7 @@ html, body, *{
 :root{
     /* --background-color: #010121; */
     --background-color: #000013;
+    --background-color-2: #020c30;
     --text-color: #31e981;
     --text-color-2: rgb(189, 184, 184);
     --secondary: #000490;

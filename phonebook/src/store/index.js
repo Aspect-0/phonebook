@@ -1,5 +1,5 @@
+import { auth } from "../firebase/config";
 import { createStore } from "vuex";
-import { auth } from "../main";
 import {
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
@@ -8,16 +8,16 @@ import {
 } from "firebase/auth";
 const store = createStore({
   state: {
-    test: 0,
     user: null,
+    authIsReady: false,
   },
   mutations: {
-    addTest(state) {
-      state.test = state.test += 1;
-    },
     setUser(state, payload) {
       state.user = payload;
       console.log("changed state", state.user);
+    },
+    setAuthIsReady(state, payload) {
+      state.authIsReady = payload;
     },
   },
   actions: {
@@ -44,4 +44,9 @@ const store = createStore({
   },
 });
 
+const unsub = onAuthStateChanged(auth, (user) => {
+  store.commit("setAuthIsReady", true);
+  store.commit("setUser", user);
+  unsub();
+});
 export default store;

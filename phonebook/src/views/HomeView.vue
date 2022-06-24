@@ -34,11 +34,13 @@
 
     </div>
   </div>
+    <BotBar/>
   </div>
 </template>
 
 <script>    
 import {useStore} from "vuex";
+import BotBar from '../components/BotBar.vue';
   export default {
     setup(){
       const store = useStore();
@@ -48,6 +50,7 @@ import {useStore} from "vuex";
       }
     },
     
+    components: { BotBar },
     
   }
 </script>
@@ -84,7 +87,7 @@ import {useStore} from "vuex";
 }
 .second{
   background-color: white ;
-  min-height: 100vh;
+  min-height: 96vh;
 }
 .secondText{
   color: var(--background-color);

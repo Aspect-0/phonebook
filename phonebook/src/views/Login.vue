@@ -25,7 +25,7 @@ export default {
         const login = async () => {
 			try {
 				await store.dispatch("login", { email: email.value, password: password.value });
-				router.push("/");
+				router.push("/Contacts");
 			} catch (err) {
          
         alert(err.message)

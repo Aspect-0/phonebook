@@ -1,4 +1,5 @@
 import { createRouter, createWebHistory } from "vue-router";
+import store from "../store";
 import HomeView from "../views/HomeView.vue";
 
 const router = createRouter({
@@ -26,6 +27,18 @@ const router = createRouter({
       path: "/login",
       name: "login",
       component: () => import("../views/Login.vue"),
+    },
+    {
+      path: "/Contacts",
+      name: "Contacts",
+      component: () => import("../views/Contacts.vue"),
+      beforeEnter: (to, from, next) => {
+        if (store.state.user == null) {
+          next("/signup");
+        } else {
+          next();
+        }
+      },
     },
   ],
 });

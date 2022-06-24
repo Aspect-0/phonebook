@@ -25,7 +25,7 @@ export default {
 		const handleSubmit = async () => {
 			try {
 				await store.dispatch("signup", { email: email.value, password: password.value });
-				router.push("/");
+				router.push("/Contacts");
 			} catch (err) {
 				alert(err.message)
 			}

@@ -2,16 +2,24 @@
     <div class="home">
         <h2 class="head">Contacts</h2>
         <div class="body">
-            <div class="card">
-                <h2 class="name">Steven Y</h2>
-                <div class="info">
-                   <h2>Tele: 123456789</h2>
 
+        <table>
+            <th>Name</th>
+            <th>Number</th>
+            <th>Text</th>
 
+            <tbody>
+                
+                <tr   >
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
 
+            </tbody>
 
-                </div>
-            </div>
+        </table>
+
         </div>
     </div>
 </template>
@@ -22,13 +30,16 @@ import {useStore} from 'vuex';
 export default {
     setup () {
         const store = useStore()
-        store.commit("createTest", {name: "Steven"})
+        const Data = []
+        store.commit("createContact")
+        store.commit("createContact2", {name: 'I DID IT'})
         store.commit("fbUser")
+      
         console.log(store.state.user.uid)
         console.log(store.state.data)
 
         return {
-            store,
+            store,Data
         }
     },
     computed:{
@@ -54,8 +65,9 @@ export default {
         
      
     }
+   
     .body{
-        display: flex;
+        color: var(--text-color);
         max-width: 70%;
         min-height: 80vh;
         margin: auto;
@@ -71,5 +83,19 @@ export default {
         background-color: var(--background-color);
         border-radius:5em;
         height: 5em;
+    }
+    table{
+        font-size: 3rem;
+        border-collapse: collapse;
+        border-spacing: 1.5rem;
+        width: 100%;
+    }
+    td{
+        border-bottom: solid 1px var(--text-color);
+        border-top: solid 1px var(--text-color);
+          padding: 10px 15px;
+    }
+    .center{
+        text-align: center;
     }
 </style>

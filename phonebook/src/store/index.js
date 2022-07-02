@@ -6,7 +6,7 @@ import {
   signOut,
   onAuthStateChanged,
 } from "firebase/auth";
-import { getDatabase, ref, set, onValue, remove } from "firebase/database";
+import { getDatabase, ref, set,push, onValue, remove } from "firebase/database";
 
 const store = createStore({
   state: {
@@ -30,14 +30,22 @@ const store = createStore({
         state.data = data;
       });
     },
-    createTest(state, payload) {
+    createContact(state){
       const db = getDatabase();
-      set(ref(db, "users/" + state.user.uid), {
-        name: payload.name,
-        numb: payload.numb,
-        image: payload.image,
-      });
+			set(ref(db, 'users/' + state.user.uid +'/Contact'), {
+        name: "Steven",
+        
+      })
     },
+    createContact2(state, payload){
+      const db = getDatabase();
+			set(ref(db, 'users/' + state.user.uid +'/Contact' + `/${payload.name}`), {
+        name: payload.name,
+        
+      })
+    },
+
+
   },
   actions: {
     async signup(context, { email, password }) {

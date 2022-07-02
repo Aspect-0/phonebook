@@ -34,7 +34,7 @@ const router = createRouter({
       component: () => import("../views/Contacts.vue"),
       beforeEnter: (to, from, next) => {
         if (store.state.user == null) {
-          next("/signup");
+          next("/login");
         } else {
           next();
         }

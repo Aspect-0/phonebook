@@ -13,6 +13,7 @@ const store = createStore({
     user: null,
     authIsReady: false,
     data: null,
+    contact:{},
   },
   mutations: {
     setUser(state, payload) {
@@ -24,23 +25,19 @@ const store = createStore({
     },
     fbUser(state) {
       const db = getDatabase();
-      const user = ref(db, "users/" + state.user.uid);
+      const user = ref(db, "users/" + state.user.uid + '/Contact');
       onValue(user, (stuff) => {
         const data = stuff.val();
         state.data = data;
       });
     },
-    createContact(state){
-      const db = getDatabase();
-			set(ref(db, 'users/' + state.user.uid +'/Contact'), {
-        name: "Steven",
-        
-      })
-    },
+
     createContact2(state, payload){
       const db = getDatabase();
 			set(ref(db, 'users/' + state.user.uid +'/Contact' + `/${payload.name}`), {
         name: payload.name,
+        Number: payload.Number,
+        email: payload.email,
         
       })
     },

@@ -2,18 +2,28 @@
     <div class="home">
         <h2 class="head">Contacts</h2>
         <div class="body">
+            <button @click="test">BUTTON</button>
+            <form ref="form"  @submit.prevent="onSubmit"  >
+                <input type="text" v-model="name" placeholder="Name">
+                <input type="text" v-model="email" placeholder="Email">
+                <input type="text" placeholder="Numb" v-model="PNum">
+           
+                <button @click="submit" >Submit</button>
+
+            </form >
+
 
         <table>
             <th>Name</th>
+            <th>Email</th>
             <th>Number</th>
-            <th>Text</th>
 
             <tbody>
                 
-                <tr   >
-                    <td></td>
-                    <td></td>
-                    <td></td>
+                <tr v-for="data in this.store.state.data" :key="data.name"  >
+                    <td >{{data.name}}</td>
+                    <td class="center">{{data.email}}</td>
+                    <td class="center">{{data.Number}}</td>
                 </tr>
 
             </tbody>
@@ -27,26 +37,41 @@
 <script>
 import { computed } from '@vue/runtime-core';
 import {useStore} from 'vuex';
+import {ref} from 'vue';
 export default {
     setup () {
         const store = useStore()
         const Data = []
-        store.commit("createContact")
-        store.commit("createContact2", {name: 'I DID IT'})
+       const name = ref("")
+       const email = ref("")
+        const PNum = ref('')
         store.commit("fbUser")
       
         console.log(store.state.user.uid)
         console.log(store.state.data)
 
         return {
-            store,Data
+            store,Data, name, email, PNum,
+        }
+    },
+    methods:{
+        submit(){
+            this.store.commit('createContact2', {Number:this.PNum, name:this.name, email: this.email})
+            this.$refs.form.reset();
+            this.name.value = null
+            this.email.value = null
+            this.PNum.value = null
+        },
+        test(){
+            console.log(this.store.state.data)
         }
     },
     computed:{
         loggedIn(){
             console.log( this.store.state.user == null)
             return this.store.state.user
-        }
+        },
+      
     }
 }
 </script>

@@ -1,6 +1,7 @@
 <template >
     <div class="home">
         <h2 class="head">Contacts</h2>
+        <card-pop></card-pop>
         <div class="body">
             <button @click="test">BUTTON</button>
             <form ref="form"  @submit.prevent="onSubmit"  >
@@ -38,7 +39,9 @@
 import { computed } from '@vue/runtime-core';
 import {useStore} from 'vuex';
 import {ref} from 'vue';
+import CardPop from '../components/CardPop.vue';
 export default {
+  components: { CardPop },
     setup () {
         const store = useStore()
         const Data = []

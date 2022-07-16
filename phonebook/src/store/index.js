@@ -7,6 +7,7 @@ import {
   onAuthStateChanged,
 } from "firebase/auth";
 import { getDatabase, ref, set,push, onValue, remove } from "firebase/database";
+import { stringifyStyle } from "@vue/shared";
 
 const store = createStore({
   state: {
@@ -18,7 +19,7 @@ const store = createStore({
   mutations: {
     setUser(state, payload) {
       state.user = payload;
-      console.log("changed state", state.user);
+     
     },
     setAuthIsReady(state, payload) {
       state.authIsReady = payload;
@@ -28,13 +29,25 @@ const store = createStore({
       const user = ref(db, "users/" + state.user.uid + '/Contact');
       onValue(user, (stuff) => {
         const data = stuff.val();
-        state.data = data;
+      
+        const preS = Object.values(data)
+        const sort = preS.sort((a,b) => {
+          if (a.name < b.name) {
+            return -1;
+        }
+        if (a.name > b.name) {
+            return 1;
+        }
+        return 0;
+        })
+        
+        state.data = sort
       });
     },
 
     createContact2(state, payload){
       const db = getDatabase();
-			set(ref(db, 'users/' + state.user.uid +'/Contact' + `/${payload.name}`), {
+			set(ref(db, 'users/' + state.user.uid +'/Contact' + `/${payload.Number}`), {
         name: payload.name,
         Number: payload.Number,
         email: payload.email,

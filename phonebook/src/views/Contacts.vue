@@ -1,18 +1,25 @@
 <template >
     <div class="home">
         <h2 class="head">Contacts</h2>
-        <card-pop></card-pop>
+        <card-pop v-if="isActive == true"
+        :Toggle="() => {   
+            return this.isActive = false
+            }"
+        :contact="this.hoverStats"
+        
+        ></card-pop>
         <div class="body">
-            <button @click="test">BUTTON</button>
             <form ref="form"  @submit.prevent="onSubmit"  >
                 <input type="text" v-model="name" placeholder="Name">
                 <input type="text" v-model="email" placeholder="Email">
-                <input type="text" placeholder="Numb" v-model="PNum">
+                <input type="text" placeholder="Numb" v-model="PNum" maxlength="9">
            
                 <button @click="submit" >Submit</button>
 
             </form >
 
+
+     
 
         <table>
             <th>Name</th>
@@ -20,8 +27,8 @@
             <th>Number</th>
 
             <tbody>
-                
-                <tr v-for="data in this.store.state.data" :key="data.name"  >
+
+                <tr class="row" v-for="data in this.store.state.data"  :key="data.name"  @mouseover="console(data.name, data.email, data.Number)" @click="trigger" >
                     <td >{{data.name}}</td>
                     <td class="center">{{data.email}}</td>
                     <td class="center">{{data.Number}}</td>
@@ -48,32 +55,41 @@ export default {
        const name = ref("")
        const email = ref("")
         const PNum = ref('')
+        const hoverStats = {}
+        const isActive = ref(false)
+        const trigger = ()=> {
+            isActive.value = !isActive.value
+        }
         store.commit("fbUser")
-      
-        console.log(store.state.user.uid)
-        console.log(store.state.data)
+    
 
         return {
-            store,Data, name, email, PNum,
+            store,Data, name, email, PNum,isActive, hoverStats, trigger
         }
     },
     methods:{
         submit(){
             this.store.commit('createContact2', {Number:this.PNum, name:this.name, email: this.email})
-            this.$refs.form.reset();
-            this.name.value = null
-            this.email.value = null
-            this.PNum.value = null
+           
+            this.$refs['form'].reset();
+            this.name = null
+            this.email = null
+            this.PNum = null
         },
-        test(){
-            console.log(this.store.state.data)
+      
+        console(name, email, number){
+            this.hoverStats.name = name
+            this.hoverStats.email = email
+            this.hoverStats.number = number
         }
+        
     },
     computed:{
         loggedIn(){
             console.log( this.store.state.user == null)
             return this.store.state.user
         },
+
       
     }
 }
@@ -126,4 +142,11 @@ export default {
     .center{
         text-align: center;
     }
+    .row{
+        transition: all .4s;
+    }
+    .row:hover{
+        color: white;
+    }
+     
 </style>

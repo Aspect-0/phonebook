@@ -56,6 +56,7 @@ export default {
     justify-content: center;
     align-items: center;
     flex-direction: column;
+    font-size: 1.2rem;
 }
 button {
  width: 5rem;

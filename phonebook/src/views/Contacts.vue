@@ -8,17 +8,14 @@
         :contact="this.hoverStats"
         
         ></card-pop>
+        <form-pop v-if="isForm == true" :Toggle="() => {
+            
+            return this.isForm = false}" ></form-pop>
+
+        
         <div class="body">
-            <form ref="form"  @submit.prevent="onSubmit"  >
-                <input type="text" v-model="name" placeholder="Name">
-                <input type="text" v-model="email" placeholder="Email">
-                <input type="text" placeholder="Numb" v-model="PNum" maxlength="9">
-           
-                <button @click="submit" >Submit</button>
 
-            </form >
-
-
+        <button @click="create" class="contactForm">+</button>
      
 
         <table>
@@ -47,8 +44,9 @@ import { computed } from '@vue/runtime-core';
 import {useStore} from 'vuex';
 import {ref} from 'vue';
 import CardPop from '../components/CardPop.vue';
+import FormPop from '../components/formPop.vue';
 export default {
-  components: { CardPop },
+  components: { CardPop, FormPop },
     setup () {
         const store = useStore()
         const Data = []
@@ -57,25 +55,22 @@ export default {
         const PNum = ref('')
         const hoverStats = {}
         const isActive = ref(false)
+        const isForm = ref(false)
         const trigger = ()=> {
             isActive.value = !isActive.value
+        }
+        const create = ()=> {
+            isForm.value = !isForm.value
         }
         store.commit("fbUser")
     
 
         return {
-            store,Data, name, email, PNum,isActive, hoverStats, trigger
+            store,Data, name, email, PNum,isActive, hoverStats, trigger, isForm, create, 
         }
     },
     methods:{
-        submit(){
-            this.store.commit('createContact2', {Number:this.PNum, name:this.name, email: this.email})
-           
-            this.$refs['form'].reset();
-            this.name = null
-            this.email = null
-            this.PNum = null
-        },
+        
       
         console(name, email, number){
             this.hoverStats.name = name
@@ -147,6 +142,19 @@ export default {
     }
     .row:hover{
         color: white;
+    }
+
+    .contactForm{
+        height: 6rem;
+        width: 6rem;
+        border-radius: 300rem;
+        font-size: 3rem;
+        display: flex;
+        justify-content: space-around;
+        align-items: center;
+        position: absolute;
+        bottom: 3rem;
+        right: 5rem;
     }
      
 </style>

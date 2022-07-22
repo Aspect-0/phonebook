@@ -1,7 +1,6 @@
 <template>
   <div class="nav">
     <RouterLink class="link" to="/">Home</RouterLink>
-    <RouterLink class="link" to="/about">About</RouterLink>
     <RouterLink v-if="!user" class="link" to="/login">Login</RouterLink>
     <RouterLink v-if="!user" class="link" to="/signup">Sign Up</RouterLink>
     <RouterLink v-if="user" class="link" to="/" @click="logout">Log Out</RouterLink>

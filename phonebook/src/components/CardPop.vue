@@ -6,7 +6,7 @@
             <h2>Email: {{contact.email}}</h2>
             <h2>Number: {{contact.number}}</h2>
             <button class="close" @click="Toggle()"> Close </button>
-            <button class="bottom" > Delete </button>
+            <button @click="del" class="bottom" > Delete </button>
         </div>
 
     </div>
@@ -14,7 +14,8 @@
 </template>
 
 <script>
- 
+import {useStore} from 'vuex'
+
 export default {
     props:{
         Toggle: Function,
@@ -22,9 +23,15 @@ export default {
         
     },
     setup(){
-
+        const store = useStore();
         return{
-
+            store,
+        }
+    },
+    methods:{
+        del(){
+            console.log(this.contact.number)
+            this.store.commit('removeContact', this.contact.number)
         }
     }
 }

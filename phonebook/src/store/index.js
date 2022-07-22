@@ -54,6 +54,16 @@ const store = createStore({
         
       })
     },
+    removeContact(state, payload){
+      const db = getDatabase();
+      
+      set(ref(db, 'users/' + state.user.uid), {
+        deleteHistory: true
+      });
+
+      remove(ref(db, 'users/' + state.user.uid + '/Contact' + `/${payload}`)); 
+      
+    }
 
 
   },

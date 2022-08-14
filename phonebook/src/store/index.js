@@ -51,17 +51,14 @@ const store = createStore({
         name: payload.name,
         Number: payload.Number,
         email: payload.email,
+        pfp: payload.pfp
         
       })
     },
     removeContact(state, payload){
       const db = getDatabase();
       
-      set(ref(db, 'users/' + state.user.uid), {
-        deleteHistory: true
-      });
-
-      remove(ref(db, 'users/' + state.user.uid + '/Contact' + `/${payload}`)); 
+      remove(ref(db, 'users/' + state.user.uid + '/Contact' + `/${payload}`))
       
     }
 

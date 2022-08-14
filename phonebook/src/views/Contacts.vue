@@ -1,6 +1,8 @@
 <template >
     <div class="home">
         <h2 class="head">Contacts</h2>
+    
+
         <card-pop v-if="isActive == true"
         :Toggle="() => {   
             return this.isActive = false
@@ -25,7 +27,7 @@
 
             <tbody>
 
-                <tr class="row" v-for="data in this.store.state.data"  :key="data.name"  @mouseover="console(data.name, data.email, data.Number)" @click="trigger" >
+                <tr class="row" v-for="data in this.store.state.data"  :key="data.name"  @mouseover="console(data.name, data.email, data.Number, data.pfp)" @click="trigger" >
                     <td >{{data.name}}</td>
                     <td class="center">{{data.email}}</td>
                     <td class="center">{{data.Number}}</td>
@@ -72,11 +74,13 @@ export default {
     methods:{
         
       
-        console(name, email, number){
+        console(name, email, number, pfp){
             this.hoverStats.name = name
             this.hoverStats.email = email
             this.hoverStats.number = number
-        }
+            this.hoverStats.pfp = pfp
+        },
+ 
         
     },
     computed:{

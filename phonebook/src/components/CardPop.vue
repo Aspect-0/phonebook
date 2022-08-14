@@ -2,6 +2,7 @@
   
     <div class="Pop">
         <div class="popup">
+            <img class="pfp" :src="contact.pfp" alt="user's pfp">
             <h2>Name: {{contact.name}}</h2>
             <h2>Email: {{contact.email}}</h2>
             <h2>Number: {{contact.number}}</h2>
@@ -30,8 +31,8 @@ export default {
     },
     methods:{
         del(){
-            console.log(this.contact.number)
             this.store.commit('removeContact', this.contact.number)
+            this.Toggle();
         }
     }
 }
@@ -117,5 +118,14 @@ button:hover::before {
 .bottom::before{
     background-color: red;
    
+}
+.pfp{
+    position: absolute;
+    top: 0;
+    margin-top: 3rem;
+    clip-path: circle(47% at 50% 50%);
+
+    height: 30%;
+
 }
 </style>

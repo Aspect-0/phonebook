@@ -2,15 +2,26 @@
     <div>
         <div class="outside">
             <div class="form">
-                    <form ref="form"  @submit.prevent="onSubmit"  >
-                        <input type="text" v-model="name" placeholder="Name" required>
-                        <input type="text" v-model="email" placeholder="Email" required>
-                        <input type="text" placeholder="Numb" v-model="PNum" maxlength="9" required>
+                    <form ref="form"   @submit.prevent="onSubmit"  >
+                        <div class="forms">
+
+                            <button class="picker" @click="pickFile" >Profile Photo</button>
+                            <input style='display:none' type="file" ref="pfp" accept="image/*" @change="updatePic">
+                            <input type="text" v-model="name" placeholder="Name" required>
+                            <input type="text" v-model="email" placeholder="Email" required>
+                            <input type="text" placeholder="Numb" v-model="PNum" maxlength="9" required>
+
+                        </div>
+
                         
-                        <button
+
+                        <button class="buttons"
                         @click="submit"
                         >Submit</button>
-                        <button class="close" @click="Toggle()"> Close </button>
+                        <button  class="close buttons" @click="Toggle()"> Close </button>
+
+
+                      
 
                     </form >
             </div>
@@ -30,23 +41,45 @@ export default {
          const name = ref("")
        const email = ref("")
         const PNum = ref('')
+        const imageURL = null
+        const error = ''
         return{
-            name, email, PNum, store
+            name, email, PNum, store, imageURL, error
         }
 
     },
     methods:{
+
+        pickFile(){
+            this.$refs.pfp.click();
+        },
+        updatePic(event){
+            const files = event.target.files
+            let filename = files[0].name
+            if (filename.lastIndexOf(".") <= 0) {
+				alert("Please Add Valid Image");
+				return 0;
+			}
+			const fileReader = new FileReader();
+			fileReader.addEventListener("load", () => {
+				this.imageURL = fileReader.result;
+			});
+			fileReader.readAsDataURL(files[0]);
+        },
+
+
         submit(){
-            this.store.commit('createContact2', {Number:this.PNum, name:this.name, email: this.email})
+            this.store.commit('createContact2', {Number:this.PNum, name:this.name, email: this.email, pfp:this.imageURL})
            
             this.$refs['form'].reset();
             this.name = null
             this.email = null
             this.PNum = null
+            this.imageURL = null
             
         },
         test(){
-            return this.submit;
+            return this.store.state.data;
         }
     }
 }
@@ -82,7 +115,7 @@ input{
     margin-bottom: 2rem;
     width: 30rem;
 }
-button {
+.buttons {
  width: 5rem;
  height: 3rem;
  margin-top: 1rem;
@@ -100,7 +133,7 @@ button {
 
 }
 
-button::before {
+.buttons::before {
  content: "";
  position: absolute;
  top: 0;
@@ -112,13 +145,32 @@ button::before {
  transition: all 0.3s;
 }
 
-button:hover::before {
+.buttons:hover::before {
  width: 100%;
 }
 .close{
      top: 0;
     right: 2rem;
 
+}
+.forms{
+    text-align: center;
+}
+.picker{
+    width: 40%;
+    height: 60px;
+    border-radius: 40px;
+    margin-bottom: 2rem;
+    background-color: #31e981;
+    border: 1px #25b965 solid;
+}
+input{
+    background-color: transparent;
+    border: none;
+    outline: none;
+    border-bottom: 2px solid #25b965;
+    height: 40px;
+    font-size: 20px;
 }
 
 </style>
